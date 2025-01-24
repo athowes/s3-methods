@@ -1,0 +1,13 @@
+---
+title: "S3 methods in R"
+subtitle: "With examples from `epidist`"
+author: Adam Howes
+format: revealjs
+bibliography: citations.bib
+---
+
+## Title
+
+Content here! Citation example [@brms].
+
+## Bibliography
