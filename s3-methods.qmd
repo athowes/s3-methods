@@ -6,8 +6,56 @@ format: revealjs
 bibliography: citations.bib
 ---
 
-## Title
+## Object-oriented programming
 
-Content here! Citation example [@brms].
+* https://adv-r.hadley.nz/s3.html
+
+## Main function
+
+```{r echo=TRUE, eval=FALSE}
+epidist <- function(...) {
+  fit <- fn(
+    formula = epidist_formula,
+    family = epidist_family,
+    prior = epidist_prior,
+    stanvars = epidist_stancode,
+    data = transformed_data,
+    ...
+  )
+}
+```
+
+## An `epidist` formula
+
+* `epidist_formula` is not S3
+* `epidist_formula_model` is S3
+* Allows us not to repeat code
+
+```{r echo=TRUE, eval=FALSE}
+epidist_formula <- function(data, family, formula, ...) {
+  # ...
+  formula <- epidist_formula_model(data, formula)
+  # ...
+  return(formula)
+}
+```
+
+## An `epidist` family
+
+* Example of double dispatch
+* The "model-specific" parts of a family
+* The "family-specific" parts of a family
+
+```{r echo=TRUE, eval=FALSE}
+epidist_family <- function(data, family, ...) {
+  # ...
+  class(family) <- c(family$family, class(family))
+  custom_family <- epidist_family_model(data, family, ...)
+  class(custom_family) <- c(family$family, class(custom_family))
+  custom_family <- epidist_family_param(custom_family)
+  # ...
+  return(custom_family)
+}
+```
 
 ## Bibliography
